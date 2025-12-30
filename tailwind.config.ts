@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Claude-inspired color palette
         claude: {
           50: '#fef7ee',
           100: '#fdecd3',
@@ -27,4 +26,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;
