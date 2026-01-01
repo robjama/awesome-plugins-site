@@ -34,8 +34,9 @@ export default function PromptViewer({ agents }: PromptViewerProps) {
 
   return (
     <div className="mt-4">
-      <h4 className="text-sm font-medium text-gray-700 mb-2">
-        Agents ({agents.length})
+      <h4 className="text-sm font-medium text-terminal-accent mb-2 flex items-center gap-2">
+        <span className="text-terminal-textDim">$</span> cat agents/
+        <span className="text-terminal-textDim">({agents.length})</span>
       </h4>
       <div className="space-y-2">
         {agents.map((agent) => {
@@ -45,25 +46,25 @@ export default function PromptViewer({ agents }: PromptViewerProps) {
           return (
             <div
               key={agent.name}
-              className="border border-gray-200 rounded-lg overflow-hidden"
+              className="border border-terminal-border overflow-hidden"
             >
               <button
                 onClick={() => toggleAgent(agent.name)}
-                className="w-full flex items-center justify-between p-3 bg-white hover:bg-gray-50 transition-colors text-left"
+                className="w-full flex items-center justify-between p-3 bg-terminal-bgLight hover:bg-terminal-bg transition-colors text-left"
               >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   {isExpanded ? (
-                    <ChevronDown className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-terminal-accent flex-shrink-0" />
                   ) : (
-                    <ChevronRight className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-terminal-accent flex-shrink-0" />
                   )}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-medium text-gray-900">
+                      <span className="font-medium text-terminal-text">
                         {agent.name}
                       </span>
                       {agent.model && (
-                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                        <span className="text-xs bg-terminal-bg text-terminal-info px-2 py-0.5 border border-terminal-border">
                           {agent.model}
                         </span>
                       )}
@@ -75,7 +76,7 @@ export default function PromptViewer({ agents }: PromptViewerProps) {
                         />
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 truncate">
+                    <p className="text-sm text-terminal-textDim truncate">
                       {agent.description}
                     </p>
                   </div>
@@ -83,29 +84,29 @@ export default function PromptViewer({ agents }: PromptViewerProps) {
               </button>
 
               {isExpanded && (
-                <div className="border-t border-gray-200 bg-gray-50 p-4 animate-fade-in">
+                <div className="border-t border-terminal-border bg-terminal-bg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h5 className="text-xs font-medium text-gray-700">
-                      Prompt
+                    <h5 className="text-xs font-medium text-terminal-textDim">
+                      <span className="text-terminal-accent">$</span> cat {agent.fileName || `${agent.name}.md`}
                     </h5>
                     <button
                       onClick={() => copyPrompt(agent.name, agent.prompt)}
-                      className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900 transition-colors"
+                      className="flex items-center gap-1 text-xs text-terminal-textDim hover:text-terminal-accent transition-colors"
                     >
                       {isCopied ? (
                         <>
-                          <Check className="w-3 h-3 text-green-600" />
-                          <span className="text-green-600">Copied!</span>
+                          <Check className="w-3 h-3 text-terminal-accent" />
+                          <span className="text-terminal-accent">copied!</span>
                         </>
                       ) : (
                         <>
                           <Copy className="w-3 h-3" />
-                          <span>Copy</span>
+                          <span>copy</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <pre className="bg-white border border-gray-200 p-3 rounded-md text-xs overflow-x-auto whitespace-pre-wrap break-words">
+                  <pre className="bg-terminal-bgLight border border-terminal-border p-3 text-xs overflow-x-auto whitespace-pre-wrap break-words text-terminal-text">
                     <code>{agent.prompt}</code>
                   </pre>
                 </div>

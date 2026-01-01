@@ -4,35 +4,59 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-terminal-bg text-terminal-text font-mono antialiased;
+    font-feature-settings: "liga" 0;
   }
 }
 
-/* Custom scrollbar */
+/* Terminal scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+  @apply bg-terminal-bg;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+  @apply bg-terminal-border hover:bg-terminal-textDim;
 }
 
-/* Smooth animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Terminal text selection */
+::selection {
+  @apply bg-terminal-accent text-terminal-bg;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
+/* Scanline effect overlay */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 255, 0, 0.02) 51%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+}
+
+/* Terminal glow effect */
+.terminal-glow {
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+/* Blinking cursor */
+.cursor-blink::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }

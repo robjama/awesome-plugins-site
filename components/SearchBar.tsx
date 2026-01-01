@@ -39,21 +39,24 @@ export default function SearchBar({
   const hasActiveFilters = searchQuery || selectedCategories.length > 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-4 z-10">
-      {/* Search Input */}
+    <div className="bg-terminal-bgLight border border-terminal-border p-4 sticky top-4 z-10">
+      {/* Search Input - Terminal Style */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 text-terminal-accent">
+          <span>$</span>
+          <Search className="w-4 h-4" />
+        </div>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search plugins, descriptions, or prompts..."
-          className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-claude-500 focus:border-transparent"
+          placeholder="grep -i 'search plugins' ..."
+          className="w-full pl-14 pr-10 py-3 bg-terminal-bg border border-terminal-border text-terminal-text placeholder-terminal-textDim focus:outline-none focus:border-terminal-accent font-mono"
         />
         {searchQuery && (
           <button
             onClick={() => onSearchChange("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-terminal-textDim hover:text-terminal-error"
           >
             <X className="w-5 h-5" />
           </button>
@@ -64,27 +67,28 @@ export default function SearchBar({
       <div className="flex items-center justify-between mt-3">
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900 font-medium"
+          className="flex items-center gap-2 text-sm text-terminal-text hover:text-terminal-accent font-medium"
         >
           <Filter className="w-4 h-4" />
-          Categories
+          <span className="text-terminal-textDim">--filter-by</span>
+          <span>categories</span>
           {selectedCategories.length > 0 && (
-            <span className="bg-claude-500 text-white text-xs px-2 py-0.5 rounded-full">
+            <span className="bg-terminal-accent text-terminal-bg text-xs px-2 py-0.5 font-bold">
               {selectedCategories.length}
             </span>
           )}
         </button>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-600">
-            {filteredCount} of {totalPlugins} plugins
+          <span className="text-sm text-terminal-textDim">
+            [{filteredCount}/{totalPlugins}]
           </span>
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="text-sm text-claude-600 hover:text-claude-700 font-medium"
+              className="text-sm text-terminal-accent hover:text-terminal-accentDim font-medium"
             >
-              Clear all
+              clear
             </button>
           )}
         </div>
@@ -92,31 +96,31 @@ export default function SearchBar({
 
       {/* Category Filters */}
       {showFilters && (
-        <div className="mt-4 pt-4 border-t border-gray-200 animate-fade-in">
+        <div className="mt-4 pt-4 border-t border-terminal-border">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {CATEGORIES.map((category) => {
               const isSelected = selectedCategories.includes(category);
               return (
                 <label
                   key={category}
-                  className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors ${
+                  className={`flex items-center gap-2 p-2 cursor-pointer transition-colors ${
                     isSelected
-                      ? "bg-claude-100 border-claude-300"
-                      : "bg-gray-50 border-gray-200 hover:bg-gray-100"
+                      ? "bg-terminal-bg border-terminal-accent"
+                      : "bg-terminal-bg border-terminal-border hover:border-terminal-textDim"
                   } border`}
                 >
                   <input
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => toggleCategory(category)}
-                    className="w-4 h-4 text-claude-600 border-gray-300 rounded focus:ring-claude-500"
+                    className="w-4 h-4"
                   />
                   <span
-                    className={`text-sm ${
-                      isSelected ? "text-claude-900 font-medium" : "text-gray-700"
+                    className={`text-sm font-mono ${
+                      isSelected ? "text-terminal-accent font-bold" : "text-terminal-text"
                     }`}
                   >
-                    {category}
+                    [{isSelected ? 'x' : ' '}] {category}
                   </span>
                 </label>
               );
